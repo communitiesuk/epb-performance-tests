@@ -1,4 +1,4 @@
-package epbr_register
+package com.gatling.tests
 
 import scala.concurrent.duration._
 

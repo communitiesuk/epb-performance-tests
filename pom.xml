@@ -11,11 +11,22 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <encoding>UTF-8</encoding>
 
+    <scala.version>2.13.8</scala.version>
+    <scala.compat.version>2.13</scala.compat.version>
+
     <gatling.version>3.6.1</gatling.version>
     <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>
+
+    <gatling.simulations.package>com.gatling.tests</gatling.simulations.package>
+    <gatling.simulation.name>PostcodeSearch</gatling.simulation.name>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
     <dependency>
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
@@ -40,6 +51,9 @@
         <groupId>io.gatling</groupId>
         <artifactId>gatling-maven-plugin</artifactId>
         <version>${gatling-maven-plugin.version}</version>
+        <configuration>
+          <simulationClass>${gatling.simulations.package}.${gatling.simulation.name}</simulationClass>
+        </configuration>
       </plugin>
     </plugins>
   </build>
