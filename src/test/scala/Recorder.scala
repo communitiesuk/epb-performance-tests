@@ -6,7 +6,8 @@ object Recorder extends App {
   val props = new RecorderPropertiesBuilder()
     .simulationsFolder(IDEPathHelper.mavenSourcesDirectory.toString)
     .resourcesFolder(IDEPathHelper.mavenResourcesDirectory.toString)
-    .simulationPackage("com.gatling.tests")
+    .simulationPackage("epb.gatling.tests")
+    .simulationFormatScala
 
-  GatlingRecorder.fromMap(props.build, Some(IDEPathHelper.recorderConfigFile))
+	GatlingRecorder.fromMap(props.build, Some(IDEPathHelper.recorderConfigFile))
 }

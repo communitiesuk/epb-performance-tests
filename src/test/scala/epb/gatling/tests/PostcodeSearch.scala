@@ -1,4 +1,4 @@
-package com.gatling.tests
+package epb.gatling.tests
 
 import scala.concurrent.duration._
 
