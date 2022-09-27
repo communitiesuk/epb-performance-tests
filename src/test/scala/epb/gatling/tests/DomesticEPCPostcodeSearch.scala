@@ -6,7 +6,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class PostcodeSearch extends Simulation {
+class DomesticEPCPostcodeSearch extends Simulation {
 
   private val httpProtocol = http
     .baseUrl("https://find-energy-certificate-staging.digital.communities.gov.uk")
