@@ -47,7 +47,7 @@ class PostcodeSearch extends Simulation {
     .pause(5)
     .feed(postcodeFeeder)
     .exec(
-      http("request_5")
+      http("search domestic epc by postcode")
         .get("/find-a-certificate/search-by-postcode?postcode=#{postcode}")
         .headers(headers_0)
         .check(css("tbody > tr.govuk-table__row:first a", "href").optional.saveAs("certificateUrl"))
@@ -55,7 +55,7 @@ class PostcodeSearch extends Simulation {
     .doIf("#{certificateUrl.exists()}") {
       pause(3)
         .exec(
-          http("request_6")
+          http("fetch domestic epc page")
             .get("#{certificateUrl}")
             .headers(headers_0)
         )
