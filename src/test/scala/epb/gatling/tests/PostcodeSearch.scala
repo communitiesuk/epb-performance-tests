@@ -50,7 +50,7 @@ class PostcodeSearch extends Simulation {
       http("request_5")
         .get("/find-a-certificate/search-by-postcode?postcode=#{postcode}")
         .headers(headers_0)
-        .check(css("tr.govuk-table__row:first a", "href").optional.saveAs("certificateUrl"))
+        .check(css("tbody > tr.govuk-table__row:first a", "href").optional.saveAs("certificateUrl"))
     )
     .doIf("#{certificateUrl.exists()}") {
       pause(3)
