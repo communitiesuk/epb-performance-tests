@@ -26,5 +26,5 @@ PATH=$PATH:$JAVA_HOME:$M2_HOME
 To run the performance test
 
 ```bash
-make test
+make performance-test-staging
 ```
