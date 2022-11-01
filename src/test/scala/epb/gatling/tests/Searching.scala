@@ -180,10 +180,10 @@ class Searching extends Simulation {
   )
     .assertions(
       global.responseTime.percentile(95).lt(3000),
-      details("search non domestic energy certificates by postcode").responseTime.percentile(95).lt(1500),
-      details("search domestic epc by postcode").responseTime.percentile(95).lt(1500),
+      details("search non domestic energy certificates by postcode").responseTime.percentile(95).lt(4000),
+      details("search domestic epc by postcode").responseTime.percentile(95).lt(4000),
       details("search domestic epc by street and town").responseTime.percentile(95).lt(10000),
-      details("search assessors by postcode").responseTime.percentile(95).lt(1500),
+      details("search assessors by postcode").responseTime.percentile(95).lt(4000),
       global.failedRequests.count.lte(0),
     )
 }
