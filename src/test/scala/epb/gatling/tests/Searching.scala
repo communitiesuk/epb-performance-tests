@@ -179,7 +179,7 @@ class Searching extends Simulation {
     scnAssessorPostcodeSearch.inject(constantUsersPerSec(10).during(15).randomized).protocols(httpProtocolGetService)
   )
     .assertions(
-      global.responseTime.percentile(95).lt(3000),
+      global.responseTime.percentile(95).lt(5000),
       details("search non domestic energy certificates by postcode").responseTime.percentile(95).lt(4000),
       details("search domestic epc by postcode").responseTime.percentile(95).lt(4000),
       details("search domestic epc by street and town").responseTime.percentile(95).lt(10000),
