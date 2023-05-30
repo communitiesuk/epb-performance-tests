@@ -9,7 +9,7 @@ import io.gatling.jdbc.Predef._
 class Searching extends Simulation {
 
   private val httpProtocolFindService = http
-    .baseUrl("https://find-energy-certificate-staging.digital.communities.gov.uk")
+    .baseUrl(sys.env("FIND_CERT_STAGING_URL"))
     .inferHtmlResources()
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")
     .acceptEncodingHeader("gzip, deflate")
@@ -17,7 +17,7 @@ class Searching extends Simulation {
     .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:105.0) Gecko/20100101 Firefox/105.0")
 
   private val httpProtocolGetService = http
-    .baseUrl("https://getting-new-energy-certificate-staging.digital.communities.gov.uk")
+    .baseUrl(sys.env("GET_CERT_STAGING_URL"))
     .inferHtmlResources()
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")
     .acceptEncodingHeader("gzip, deflate")
@@ -27,24 +27,24 @@ class Searching extends Simulation {
   private val headers_get_findService = Map(
     "Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
     "Upgrade-Insecure-Requests" -> "1",
-    "Referer" -> "https://find-energy-certificate-staging.digital.communities.gov.uk"
+    "Referer" -> sys.env("FIND_CERT_STAGING_URL")
   )
 
   private val headers_post_findService = Map(
-    "Origin" -> "https://find-energy-certificate-staging.digital.communities.gov.uk",
-    "Referer" -> "https://find-energy-certificate-staging.digital.communities.gov.uk",
+    "Origin" -> sys.env("FIND_CERT_STAGING_URL"),
+    "Referer" -> sys.env("FIND_CERT_STAGING_URL"),
     "Upgrade-Insecure-Requests" -> "1"
   )
 
   private val headers_get_getService = Map(
     "Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
     "Upgrade-Insecure-Requests" -> "1",
-    "Referer" -> "https://getting-new-energy-certificate-staging.digital.communities.gov.uk"
+    "Referer" -> sys.env("GET_CERT_STAGING_URL")
   )
 
   private val headers_post_getService = Map(
-    "Origin" -> "https://getting-new-energy-certificate-staging.digital.communities.gov.uk",
-    "Referer" -> "https://getting-new-energy-certificate-staging.digital.communities.gov.uk",
+    "Origin" -> sys.env("GET_CERT_STAGING_URL"),
+    "Referer" -> sys.env("GET_CERT_STAGING_URL"),
     "Upgrade-Insecure-Requests" -> "1"
   )
 
