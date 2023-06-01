@@ -21,6 +21,18 @@ export M2_HOME=/path/to/maven/bin
 PATH=$PATH:$JAVA_HOME:$M2_HOME
 ```
 
+### Alternatively  Install using brew
+
+Install Java:
+`brew install java`
+
+Install Maven:
+`brew maven java`
+
+Enable JVM:
+`sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk`
+
+
 ## Running the tests
 
 To run the performance test
