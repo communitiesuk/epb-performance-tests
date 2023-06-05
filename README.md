@@ -41,6 +41,7 @@ To run the performance test you will need to set the following as environment Va
 export FIND_CERT_STAGING_URL=url
 export GET_CERT_STAGING_URL=url
 ```
+Then run the following cmd:
 
 ```bash
 make performance-test-staging
