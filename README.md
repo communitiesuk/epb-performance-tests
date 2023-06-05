@@ -35,7 +35,12 @@ Enable JVM:
 
 ## Running the tests
 
-To run the performance test
+To run the performance test you will need to set the following as environment Variables to URLs of the find and get services of the front end on the staging environment
+
+```bash
+export FIND_CERT_STAGING_URL=url
+export GET_CERT_STAGING_URL=url
+```
 
 ```bash
 make performance-test-staging
