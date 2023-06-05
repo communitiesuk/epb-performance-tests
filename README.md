@@ -27,7 +27,7 @@ Install Java:
 `brew install java`
 
 Install Maven:
-`brew maven java`
+`brew install maven`
 
 Enable JVM:
 `sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk`
