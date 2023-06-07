@@ -173,10 +173,11 @@ class Searching extends Simulation {
         .headers(headers_get_getService)
     )
 
-  setUp(scnDomesticPostcodeSearch.inject(constantUsersPerSec(3).during(600).randomized).protocols(httpProtocolFindService),
-    scnDomesticStreetAndTownSearch.inject(atOnceUsers(5)).protocols(httpProtocolFindService),
-    scnNonDomesticPostcodeSearch.inject(constantUsersPerSec(3).during(600).randomized).protocols(httpProtocolFindService),
-    scnAssessorPostcodeSearch.inject(constantUsersPerSec(3).during(600).randomized).protocols(httpProtocolGetService)
+  setUp(
+    scnDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolFindService),
+    scnDomesticStreetAndTownSearch.inject(nothingFor(500),atOnceUsers(5)).protocols(httpProtocolFindService),
+    scnNonDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolFindService),
+    scnAssessorPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolGetService)
   )
     .assertions(
       global.responseTime.percentile(95).lt(5000),
