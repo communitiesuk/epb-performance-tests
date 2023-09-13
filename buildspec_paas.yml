@@ -2,8 +2,8 @@ version: 0.2
 
 env:
   variables:
-    FIND_CERT_STAGING_URL: "https://mhclg-epb-static-start-pages-staging.london.cloudapps.digital/find-an-energy-certificate.html"
-    GET_CERT_STAGING_URL: "https://mhclg-epb-static-start-pages-staging.london.cloudapps.digital/getting-a-new-energy-certificate.html"
+    FIND_CERT_STAGING_URL: "https://find-energy-certificate-staging.london.cloudapps.digital"
+    GET_CERT_STAGING_URL: "https://getting-new-energy-certificate-staging.london.cloudapps.digital"
 
 phases:
   install:
