@@ -1,0 +1,21 @@
+version: 0.2
+
+env:
+  variables:
+    FIND_CERT_STAGING_URL: "https://find-energy-certificate.centraldatastore.net"
+    GET_CERT_STAGING_URL: "https://getting-new-energy-certificate.centraldatastore.net"
+    PERFORMANCE_REPORT_BUCKET: "epbr-performance-test-reports"
+    PERFORMANCE_REPORT_BUCKET_FOLDER: "production"
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+  build:
+    commands:
+      - make performance-test-staging
+  post_build:
+    commands:
+      - cd target/gatling
+      - aws s3 cp . s3://$PERFORMANCE_REPORT_BUCKET/$PERFORMANCE_REPORT_BUCKET_FOLDER --recursive
+      - echo "Copied the performance report to the $PERFORMANCE_REPORT_BUCKET_FOLDER folder in the $PERFORMANCE_REPORT_BUCKET S3 bucket"
