@@ -49,7 +49,6 @@ class Searching extends Simulation {
   )
 
   private val postcodeFeeder = csv("postcodes.csv").random()
-  private val streetAndTownFeeder = csv("streetsandtowns.csv").random()
 
   private val scnDomesticPostcodeSearch = scenario("DomesticPostcodeSearch")
     .exec(
@@ -73,36 +72,6 @@ class Searching extends Simulation {
         .headers(headers_get_findService)
         .check(css("tbody > tr.govuk-table__row:first a", "href").optional.saveAs("certificateUrl"))
     )
-    .doIf("#{certificateUrl.exists()}") {
-      pause(3)
-        .exec(
-          http("fetch domestic epc page")
-            .get("#{certificateUrl}")
-            .headers(headers_get_findService)
-        )
-    }
-
-  private val scnDomesticStreetAndTownSearch = scenario("DomesticStreetAndTownSearch")
-    .exec(
-      http("search by street and town form")
-        .get("/find-a-certificate/search-by-street-name-and-town")
-        .headers(headers_get_findService)
-    )
-    .pause(7)
-    .feed(streetAndTownFeeder)
-    .exec(
-      http("search domestic epc by street and town")
-        .get("/find-a-certificate/search-by-street-name-and-town?street_name=#{street}&town=#{town}")
-        .headers(headers_get_findService)
-        .check(css("tbody > tr.govuk-table__row:first a", "href").optional.saveAs("certificateUrl"))
-    )
-    .doIf("#{certificateUrl.isUndefined()}") {
-      pause(3)
-        .exec { session =>
-          println("Did not get a certificate for: " + session("street").as[String] + ", " + session("town").as[String])
-          session
-        }
-    }
     .doIf("#{certificateUrl.exists()}") {
       pause(3)
         .exec(
@@ -174,16 +143,14 @@ class Searching extends Simulation {
     )
 
   setUp(
-    scnDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolFindService),
-    scnDomesticStreetAndTownSearch.inject(nothingFor(500),atOnceUsers(5)).protocols(httpProtocolFindService),
-    scnNonDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolFindService),
-    scnAssessorPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolGetService)
+    scnDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(12).during(600),constantUsersPerSec(12).during(300).randomized).protocols(httpProtocolFindService),
+    scnNonDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(12).during(600),constantUsersPerSec(12).during(300).randomized).protocols(httpProtocolFindService),
+    scnAssessorPostcodeSearch.inject(rampUsersPerSec(1).to(12).during(600),constantUsersPerSec(12).during(300).randomized).protocols(httpProtocolGetService)
   )
     .assertions(
       global.responseTime.percentile(95).lt(5000),
       details("search non domestic energy certificates by postcode").responseTime.percentile(95).lt(4000),
       details("search domestic epc by postcode").responseTime.percentile(95).lt(4000),
-      details("search domestic epc by street and town").responseTime.percentile(95).lt(10000),
       details("search assessors by postcode").responseTime.percentile(95).lt(4000),
       global.failedRequests.count.lte(0),
     )
