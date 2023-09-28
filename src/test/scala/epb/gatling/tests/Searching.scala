@@ -143,9 +143,9 @@ class Searching extends Simulation {
     )
 
   setUp(
-    scnDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(12).during(60),constantUsersPerSec(12).during(300).randomized,rampUsersPerSec(12).to(1).during(600)).protocols(httpProtocolFindService),
-    scnNonDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(12).during(60),constantUsersPerSec(12).during(300).randomized,rampUsersPerSec(12).to(1).during(600)).protocols(httpProtocolFindService),
-    scnAssessorPostcodeSearch.inject(rampUsersPerSec(1).to(12).during(60),constantUsersPerSec(12).during(300).randomized,rampUsersPerSec(12).to(1).during(600)).protocols(httpProtocolGetService)
+    scnDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(36).during(2700),constantUsersPerSec(36).during(300).randomized,rampUsersPerSec(12).to(1).during(600)).protocols(httpProtocolFindService),
+    scnNonDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(36).during(2700),constantUsersPerSec(36).during(300).randomized,rampUsersPerSec(12).to(1).during(600)).protocols(httpProtocolFindService),
+    scnAssessorPostcodeSearch.inject(rampUsersPerSec(1).to(36).during(2700),constantUsersPerSec(36).during(300).randomized,rampUsersPerSec(12).to(1).during(600)).protocols(httpProtocolGetService)
   )
     .assertions(
       global.responseTime.percentile(95).lt(5000),
