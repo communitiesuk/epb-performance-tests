@@ -2,10 +2,10 @@ version: 0.2
 
 env:
   variables:
-    FIND_CERT_STAGING_URL: "https://find-energy-certificate-staging.digital.communities.gov.uk"
-    GET_CERT_STAGING_URL: "https://getting-new-energy-certificate-staging.digital.communities.gov.uk"
+    FIND_CERT_STAGING_URL: "https://find-energy-certificate.centraldatastore.net"
+    GET_CERT_STAGING_URL: "https://getting-new-energy-certificate.centraldatastore.net"
     PERFORMANCE_REPORT_BUCKET: "epbr-performance-test-reports"
-    PERFORMANCE_REPORT_BUCKET_FOLDER: "staging"
+    PERFORMANCE_REPORT_BUCKET_FOLDER: "production"
 
 phases:
   install:
