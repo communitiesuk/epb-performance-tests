@@ -1,11 +1,18 @@
-Performance tests for Energy Performance of Buildings Register services
-=======================================================================
+# Performance tests for Energy Performance of Buildings Register services
 
 A Maven project using the [Gatling plugin for Maven](https://gatling.io/docs/current/extensions/maven_plugin/).
 
 This project is written in Scala.
 
-## Prerequisites
+## Running locally
+
+Ensure your IP address is in the allowed IP addresses for the environment you are testing.
+
+Run the tests: `docker compose up`
+
+The results can be found in the **target** directory.
+
+## Building the project
 
 Install the following:
 * Java Virtual Machine (JVM) (our CI/CD pipeline uses [Corretto 17](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)). Scroll down the table to find the macOS 64 platform link (it may not look scrollable but it is). Once downloaded double click to install.
@@ -33,7 +40,7 @@ Enable JVM:
 `sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk`
 
 
-## Running the tests
+### Running the tests
 
 To run the performance test you will need to set the following as environment Variables to URLs of the find and get services of the front end on the staging environment
 

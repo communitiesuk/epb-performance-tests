@@ -1,0 +1,10 @@
+services:
+  performance-test:
+    image: maven:3-eclipse-temurin-17
+    command: mvn gatling:test 
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      - FIND_CERT_STAGING_URL=https://find-energy-certificate-staging.digital.communities.gov.uk
+      - GET_CERT_STAGING_URL=https://getting-new-energy-certificate-staging.digital.communities.gov.uk
