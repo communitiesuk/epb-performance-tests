@@ -49,6 +49,7 @@ class Searching extends Simulation {
   )
 
   private val postcodeFeeder = csv("postcodes.csv").random()
+  private val warmUpStreetAndTownFeeder = csv("streetsandtowns.csv").shuffle()
   private val streetAndTownFeeder = csv("streetsandtowns.csv").random()
 
   private val scnDomesticPostcodeSearch = scenario("DomesticPostcodeSearch")
@@ -80,6 +81,18 @@ class Searching extends Simulation {
             .get("#{certificateUrl}")
             .headers(headers_get_findService)
         )
+    }
+
+  // The street and town search can be slow if the index is not yet loaded into memory
+  // Attempt each search prior to running the main test
+  private val warmUpDomesticStreetAndTownSearch = scenario("WarmUpDomesticStreetAndTownSearch")
+    .repeat(128) { // length of the CSV feeder 
+      feed(warmUpStreetAndTownFeeder)
+        .exec(
+          http("warm up domestic epc by street and town")
+            .get("/find-a-certificate/search-by-street-name-and-town?street_name=#{street}&town=#{town}")
+            .silent
+          )
     }
 
   private val scnDomesticStreetAndTownSearch = scenario("DomesticStreetAndTownSearch")
@@ -175,7 +188,8 @@ class Searching extends Simulation {
 
   setUp(
     scnDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolFindService),
-    scnDomesticStreetAndTownSearch.inject(nothingFor(500),atOnceUsers(5)).protocols(httpProtocolFindService),
+    warmUpDomesticStreetAndTownSearch.inject(atOnceUsers(1)).protocols(httpProtocolFindService),
+    scnDomesticStreetAndTownSearch.inject(nothingFor(90),rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(210).randomized).protocols(httpProtocolFindService),
     scnNonDomesticPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolFindService),
     scnAssessorPostcodeSearch.inject(rampUsersPerSec(1).to(3).during(300),constantUsersPerSec(3).during(300).randomized).protocols(httpProtocolGetService)
   )
